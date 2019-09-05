@@ -11,6 +11,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 AREA=$1
+ISO_CODE=$2
 DOCKER_COMPOSE_FILE=./docker-compose-config.yml
 
 rm -f *.osm.pbf
@@ -40,6 +41,9 @@ echo "--------------------------------------------"
 cat > $DOCKER_COMPOSE_FILE  <<- EOM
 version: "2"
 services:
+  import-country:
+    environment:
+      ISO_CODE: $ISO_CODE
   generate-vectortiles:
     environment:
       BBOX: "$lon_min,$lat_min,$lon_max,$lat_max"
